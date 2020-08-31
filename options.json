@@ -10,5 +10,6 @@
 	"retain": [
 		"t0"
 	],
-	"testFor": 15
+	"testFor": 15,
+	"timeoutMs":1000
 }

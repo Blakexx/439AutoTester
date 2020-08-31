@@ -2,8 +2,33 @@ const fetcher = require("./fetcher.js");
 const shell = require("shelljs");
 const fs = require("fs");
 const extra = require("fs-extra");
+const { resolve } = require("path");
 
 let options = fetcher.options;
+
+function rayEqual(ray1, ray2) {
+    if(ray1==null || ray2==null){
+        return false;
+    }
+    if(ray1.length!=ray2.length){
+        return false;
+    }
+    for(let i = 0; i<ray1.length;i++){
+        if(ray1[i]!=ray2[i]){
+            return false;
+        }
+    }
+    return true;
+}
+
+function execScript(script,timeout){
+    return new Promise((resolve,reject)=>{
+        let process = shell.exec(script,{silent:true, timeout:timeout, fatal:true,async:true},(code,stdout,stderr)=>{
+            shell.exec("pkill -f qemu-system-i38");
+            resolve({stdout,stderr,code});
+        });
+    });
+}
 
 fetcher.fetch().then(async function(toTest) {
     console.log();
@@ -16,18 +41,9 @@ fetcher.fetch().then(async function(toTest) {
         let testFor = options["testFor"];
         let passed = 0;
         for(let test = 0; test<testFor;test++){
-            const {stdout, stderr, code} = shell.exec("cd "+options["projectPath"]+" && ./run_qemu",{silent:true});
+            const {stderr,stdout,code} = await execScript("cd "+options["projectPath"]+" && ./run_qemu",options["timeoutMs"]);
             let lines = stdout.split("\n").filter(line=>line.startsWith("***"));
-            let didPass = false;
-            if(lines.length==expected.length){
-                didPass = true;
-                for(let i = 0; i<lines.length;i++){
-                    if(lines[i]!=expected[i]){
-                        didPass = false;
-                        break;
-                    }
-                }
-            }
+            let didPass = code && rayEqual(lines,expected);
             passed+=didPass?1:0;
             let testFile = "./outputs/"+testName+"/"+test+"-"+(didPass?"passed":"failed");
             await extra.ensureFile(testFile);
