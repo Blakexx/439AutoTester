@@ -1,0 +1,14 @@
+{
+	"projectPath":"/absolute/path/to/project",
+	"testName":"Group of tests",
+	"gitUrl":"Git repo",
+	"websiteUrl":"The website",
+	"fetchAll":true/false,
+	"tests":[
+		"t0"
+    ],
+    "retain":[
+        "t0"
+    ],
+    "testFor":15
+}

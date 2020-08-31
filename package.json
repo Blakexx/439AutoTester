@@ -1,0 +1,26 @@
+{
+  "name": "439autotester",
+  "version": "1.0.0",
+  "description": "Automatically fetches and tests CS 439 projects",
+  "main": "tester.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blakexx/439AutoTester.git"
+  },
+  "author": "Blake Bottum",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Blakexx/439AutoTester/issues"
+  },
+  "homepage": "https://github.com/Blakexx/439AutoTester#readme",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "fs": "0.0.1-security",
+    "fs-extra": "^9.0.1",
+    "node-fetch": "^2.6.0",
+    "shelljs": "^0.8.4"
+  }
+}
