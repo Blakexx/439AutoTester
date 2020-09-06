@@ -78,7 +78,7 @@ function copyToProject(namesList, dataList){
         for(let i = 0; i<namesList.length;i++){
             let filePath = projectPath+"/"+namesList[i];
             let data = dataList[i];
-            if(data){
+            if(data!=null){
                 extra.ensureFile(filePath).then(()=>{
                     fs.writeFile(filePath,data,err=>{
                         if(++numWrote==namesList.length){
@@ -86,6 +86,10 @@ function copyToProject(namesList, dataList){
                         }
                     });
                 });
+            }else{
+                if(++numWrote==namesList.length){
+                    resolve();
+                }
             }
         }
     });

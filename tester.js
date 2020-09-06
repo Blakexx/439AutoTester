@@ -43,7 +43,7 @@ fetcher.fetch().then(async function(toTest) {
         for(let test = 0; test<testFor;test++){
             const {stderr,stdout,code} = await execScript("cd "+options["projectPath"]+" && ./run_qemu",options["timeoutMs"]);
             let lines = stdout.split("\n").filter(line=>line.startsWith("***"));
-            let didPass = code && rayEqual(lines,expected);
+            let didPass = code!=null && rayEqual(lines,expected);
             passed+=didPass?1:0;
             let testFile = "./outputs/"+testName+"/"+test+"-"+(didPass?"passed":"failed");
             await extra.ensureFile(testFile);

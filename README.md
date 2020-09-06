@@ -6,7 +6,7 @@ To run, you must first install the required node modules
 
 To do this, simply run `npm install` inside of the project directory
 
-Finally, run the code using `node fetcher.js` in your terminal
+Finally, run the code using `node tester.js` in your terminal
 
 ## Configuring the Options file
 
